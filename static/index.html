@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Мой Paint</title>
+    <style>
+        #paint-canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+
+<div class="controls">
+    <label for="color-picker">Цвет:</label>
+    <input type="color" id="color-picker" value="#000000">
+
+    <button id="pencil-btn">Карандаш</button>
+    <button id="eraser-btn">Ластик</button>
+</div>
+
+<div id="status">В сети: <span id="user-count">0</span></div>
+<canvas id="paint-canvas" width="800" height="600"></canvas>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
