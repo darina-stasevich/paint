@@ -25,6 +25,7 @@ func main() {
 	rand.New(rand.NewSource(time.Now().UnixNano()))
 
 	hm := NewHubManager()
+	go hm.deleteHub()
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {

@@ -6,20 +6,27 @@ import (
 )
 
 type Hub struct {
-	clients    map[*Client]bool
+	clients map[*Client]bool
+
 	broadcast  chan []byte
 	register   chan *Client
 	unregister chan *Client
-	history    [][]byte
+
+	history [][]byte
+
+	id string
+	hm *HubManager
 }
 
-func NewHub() *Hub {
+func NewHub(hm *HubManager, id string) *Hub {
 	return &Hub{
 		clients:    make(map[*Client]bool),
 		broadcast:  make(chan []byte),
 		register:   make(chan *Client),
 		unregister: make(chan *Client),
 		history:    make([][]byte, 0),
+		id:         id,
+		hm:         hm,
 	}
 }
 
@@ -57,6 +64,9 @@ func (hub *Hub) run() {
 		case client := <-hub.unregister:
 			delete(hub.clients, client)
 			hub.broadcastUserCount()
+			if len(hub.clients) == 0 {
+				hub.hm.unregisterHum <- hub.id
+			}
 		case message := <-hub.broadcast:
 			dirtyClients := false
 			for client, _ := range hub.clients {
@@ -71,6 +81,9 @@ func (hub *Hub) run() {
 			hub.history = append(hub.history, message)
 			if dirtyClients {
 				hub.broadcastUserCount()
+				if len(hub.clients) == 0 {
+					hub.hm.unregisterHum <- hub.id
+				}
 			}
 		}
 	}
