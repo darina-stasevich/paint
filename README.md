@@ -12,13 +12,13 @@ Go Paint позволяет нескольким пользователям од
 
 1. Клонируйте репозиторий и перейдите в папку с проектом
 ```bash
-   git clone https://github.com/darina-stasevich/paint.git
-   cd paint
+git clone https://github.com/darina-stasevich/paint.git
+cd paint
 ```
 
 2. Соберите Docker-образ и запустите его:
 ```bash
-   docker build -t go-paint .
-  docker run -d -p 8080:8080 --name paint-app go-paint
+docker build -t go-paint .
+docker run -d -p 8080:8080 --name paint-app go-paint
 ```
 3. Запустите в браузере по адресу http://localhost:8080
